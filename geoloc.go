@@ -11,7 +11,7 @@ import (
 )
 
 //Coordinates is a set of coordinate
-type Coordinates [][]Coordinate
+type Coordinates []Coordinate
 
 //Coordinate is a [longitude, latitude]
 type Coordinate [2]float64
@@ -28,8 +28,8 @@ func (p *Point) parseJSON(r io.Reader) (err error) {
 	return err
 }
 
-// OldPolygon rapresent a geojson polygon geometry object
-type OldPolygon struct {
+// Polygon rapresent a geojson polygon geometry object
+type Polygon struct {
 	Type        string `json:"type"`
 	Coordinates `json:"coordinates"`
 }
@@ -42,19 +42,14 @@ func (p *Polygon) parseJSON(r io.Reader) (err error) {
 
 // MultiPolygon rapresent a geojson mulitpolygon  geometry object
 type MultiPolygon struct {
-	Type        string    `json:"type"`
-	Coordinates []Polygon `json:"coordinates"`
+	Type     string    `json:"type"`
+	Polygons []Polygon `json:"coordinates"`
 }
 
 func (p *MultiPolygon) parseJSON(r io.Reader) (err error) {
 	decoder := json.NewDecoder(r)
 	err = decoder.Decode(&p)
 	return err
-}
-
-// Polygon rapresent a geojson mulitpolygon  geometry object
-type Polygon struct {
-	Coordinates []Coordinates `json:"coordinates"`
 }
 
 // LocationCollection represents a collection of features
@@ -87,8 +82,20 @@ type Properties struct {
 
 // Geometry represents a geometric shape (Multipolygon)
 type Geometry struct {
-	Type        string        `json:"type"`
-	Coordinates []Coordinates `json:"coordinates"`
+	Type        string          `json:"type"`
+	Coordinates [][]Coordinates `json:"coordinates"`
+}
+
+func (g Geometry) sides() [][]Coordinates {
+	for a, coordArr := range g.Coordinates {
+		fmt.Printf("num: %b ; len %b ; value %v\n", a, len(coordArr), coordArr)
+		// if len(coordArr) > 1 {
+		// 	for b, coordArr2 := range coordArr[a] {
+		// 		fmt.Println(b, coordArr2)
+		// 	}
+		// }
+	}
+	return nil
 }
 
 type geojson interface {
