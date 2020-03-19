@@ -28,8 +28,8 @@ func (p *Point) parseJSON(r io.Reader) (err error) {
 	return err
 }
 
-// Polygon rapresent a geojson polygon geometry object
-type Polygon struct {
+// OldPolygon rapresent a geojson polygon geometry object
+type OldPolygon struct {
 	Type        string `json:"type"`
 	Coordinates `json:"coordinates"`
 }
@@ -42,14 +42,19 @@ func (p *Polygon) parseJSON(r io.Reader) (err error) {
 
 // MultiPolygon rapresent a geojson mulitpolygon  geometry object
 type MultiPolygon struct {
-	Type        string        `json:"type"`
-	Coordinates []Coordinates `json:"coordinates"`
+	Type        string    `json:"type"`
+	Coordinates []Polygon `json:"coordinates"`
 }
 
 func (p *MultiPolygon) parseJSON(r io.Reader) (err error) {
 	decoder := json.NewDecoder(r)
 	err = decoder.Decode(&p)
 	return err
+}
+
+// Polygon rapresent a geojson mulitpolygon  geometry object
+type Polygon struct {
+	Coordinates []Coordinates `json:"coordinates"`
 }
 
 // LocationCollection represents a collection of features
@@ -142,7 +147,6 @@ func loadGeoData(geoDataFile string) (LocationCollection, error) {
 	decoder := json.NewDecoder(fileReader)
 	locationColl := LocationCollection{}
 	err = decoder.Decode(&locationColl)
-	// return fmt.Sprintf("%s", locationColl.Locations[0].Properties.Name), nil
 	return locationColl, nil
 }
 
