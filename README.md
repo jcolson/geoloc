@@ -60,6 +60,8 @@ curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geom
 
 ### Example for India
 
+as there is no geolocation data bundled for india, it will fail to resolve and return 400 error
+
 ```
 curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [ 78.962883, 20.5936832 ]}}]}' -H "Content-Type: application/json" http://localhost:8080/sncr/geo/point
 ```
