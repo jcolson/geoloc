@@ -4,17 +4,30 @@ This service returns what location that point is in, if the geodata is aware of 
 
 There is bundled data in the executable, this microservice is not dependant on anything else.
 
+## run tests
+
+```
+#if you need dependencies installed
+go get ./...
+
+go test
+```
+
 ## compile
 
 ```
+#if you need dependencies installed
 go get ./...
+
 go build
 ```
 
-for linux target
+for linux target (if you're building on windows/mac/etc)
 
 ```
+#if you need dependencies installed
 go get ./...
+
 env GOOS=linux GOARCH=amd64 go build
 ```
 
