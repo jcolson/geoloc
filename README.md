@@ -1,4 +1,4 @@
-# geocoding quickie
+# geocode service
 
 This service returns what location that point is in, if the geodata is aware of it.
 
