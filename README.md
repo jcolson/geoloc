@@ -10,6 +10,12 @@ There is bundled data in the executable, this microservice is not dependant on a
 go build
 ```
 
+for linux target
+
+```
+env GOOS=linux GOARCH=amd64 go build
+```
+
 ## run it
 
 ```
