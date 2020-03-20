@@ -7,12 +7,14 @@ There is bundled data in the executable, this microservice is not dependant on a
 ## compile
 
 ```
+go get ./...
 go build
 ```
 
 for linux target
 
 ```
+go get ./...
 env GOOS=linux GOARCH=amd64 go build
 ```
 
