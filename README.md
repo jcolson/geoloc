@@ -6,11 +6,15 @@ There is bundled data in the executable, this microservice is not dependant on a
 
 ## compile
 
+```
 go build
+```
 
 ## run it
 
+```
 PORT=8080; ./geoloc
+```
 
 ## get results
 
@@ -19,11 +23,13 @@ the simple service takes a geojson formatted 'point' at the endpoint of /sncr/ge
 the service returns what location that point is in, if the geodata is aware of it
 
 ### Example for Texas
+
 ```
 curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [ -100.000000, 31.000000 ]}}]}' -H "Content-Type: application/json" http://localhost:8080/sncr/geo/point
 ```
 
-example response:
+### example response:
+
 ```
 *   Trying ::1...
 * TCP_NODELAY set
@@ -47,11 +53,13 @@ example response:
 ```
 
 ### Example for India
+
 ```
 curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [ 78.962883, 20.5936832 ]}}]}' -H "Content-Type: application/json" http://localhost:8080/sncr/geo/point
 ```
 
-example response:
+### example response:
+
 ```
 *   Trying ::1...
 * TCP_NODELAY set
