@@ -16,11 +16,14 @@ import (
 // Endpoint is  the name of the geojson handler endpoint
 const Endpoint = "/sncr/geo/"
 
+var externalData string
+
 func main() {
 	sncrGeoHandler := http.HandlerFunc(Handler)
 	http.Handle(Endpoint, sncrGeoHandler)
 	// server
 	port := os.Getenv("PORT")
+	externalData = os.Getenv("EXTERNALDATA")
 	addr := fmt.Sprintf(":%v", port)
 	fmt.Printf("listening on :%v", port)
 	http.ListenAndServe(addr, nil)
@@ -85,6 +88,10 @@ func loadGeoDataFromFile(geoDataFile string) (*geojson.FeatureCollection, error)
 }
 
 func loadGeoDataDefault() (*geojson.FeatureCollection, error) {
+	if externalData != "" {
+		fc, err := loadGeoDataFromFile(externalData)
+		return fc, err
+	}
 	fc, err := geojson.UnmarshalFeatureCollection([]byte(GEODATA))
 	return fc, err
 }

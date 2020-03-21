@@ -10,7 +10,7 @@ There is bundled data in the executable, this microservice is not dependant on a
 #if you need dependencies installed
 go get ./...
 
-go test
+go test -v
 ```
 
 ## compile
@@ -31,10 +31,16 @@ go get ./...
 env GOOS=linux GOARCH=amd64 go build
 ```
 
-## run it
+## run the server/service
 
+to run the service on port 8080
 ```
 PORT=8080; ./geoloc
+```
+
+to run the service on port 8080 and also load external geo json data (geo.json in this instance)
+```
+PORT=8080 EXTERNALDATA=geo.json ./geoloc 
 ```
 
 ## get results
