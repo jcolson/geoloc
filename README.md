@@ -30,7 +30,7 @@ env GOOS=linux GOARCH=amd64 ./build.sh
 
 to run the service on port 8080
 ```
-PORT=8080; ./geoloc
+PORT=8080 ./geoloc
 ```
 
 to run the service on port 8080 and also load external geo json data (geocombined.json in this instance)
