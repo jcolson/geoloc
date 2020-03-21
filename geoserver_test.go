@@ -10,7 +10,7 @@ import (
 	"github.com/paulmach/orb"
 )
 
-const EXTGEODATA string = "geo.json"
+const EXTGEODATA string = "geousa.json"
 
 var locationTestMap = map[string]orb.Point{
 	"Alaska":               orb.Point{-154.493062, 63.588753},
