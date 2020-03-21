@@ -7,5 +7,5 @@ POSTPEND="\`"
 cat <(echo "${PREPEND}") geocombined.json <(echo "${POSTPEND}") > geojson.go
 
 go get ./...
-
+go test -v
 go build
