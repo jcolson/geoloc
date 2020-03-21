@@ -10,7 +10,7 @@ import (
 	"github.com/paulmach/orb"
 )
 
-const EXTGEODATA string = "geousa.json"
+const EXTGEODATA string = "geocombined.json"
 
 var locationTestMap = map[string]orb.Point{
 	"Alaska":               orb.Point{-154.493062, 63.588753},
@@ -65,9 +65,12 @@ var locationTestMap = map[string]orb.Point{
 	"Wisconsin":            orb.Point{-88.787868, 43.78444},
 	"West Virginia":        orb.Point{-80.454903, 38.597626},
 	"Wyoming":              orb.Point{-107.290284, 43.075968},
+	"Ireland":              orb.Point{-6.207248, 53.305834},
+	"India":                orb.Point{78.962883, 20.5936832},
+	"France":               orb.Point{2.318219, 48.852513},
 }
 var locationTestMapFalse = map[string]orb.Point{
-	"India": orb.Point{78.962883, 20.5936832},
+	"Somewhere off the coast of Ireland": orb.Point{-5.945750, 53.312652},
 }
 
 func TestLoadGeoData(t *testing.T) {
@@ -119,8 +122,7 @@ func TestHandlerNeg(t *testing.T) {
 	}
 }
 func TestHandlerPos(t *testing.T) {
-	// Create a request to pass to our handler.
-	// pass a point as the third parameter.
+	handler := http.HandlerFunc(Handler)
 	for key, point := range locationTestMap {
 		jsonStr := fmt.Sprintf(`{ "type": "FeatureCollection",
 		"features": [
@@ -137,7 +139,6 @@ func TestHandlerPos(t *testing.T) {
 
 		// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
 		rr := httptest.NewRecorder()
-		handler := http.HandlerFunc(Handler)
 
 		// Our handlers satisfy http.Handler, so we can call their ServeHTTP method
 		// directly and pass in our Request and ResponseRecorder.

@@ -23,10 +23,7 @@ go test -v
 for linux target (if you're building on windows/mac/etc)
 
 ```
-#if you need dependencies installed
-go get ./...
-
-env GOOS=linux GOARCH=amd64 go build
+env GOOS=linux GOARCH=amd64 ./build.sh 
 ```
 
 ## run the server/service
@@ -77,12 +74,41 @@ curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geom
 * Closing connection 0
 ```
 
-### Example for India
-
-as there is no geolocation data bundled for india, it will fail to resolve and return 400 error
+### Example for France
 
 ```
-curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [ 78.962883, 20.5936832 ]}}]}' -H "Content-Type: application/json" http://localhost:8080/sncr/geo/point
+curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [2.318219, 48.852513]}}]}' -H "Content-Type: application/json" http://localhost:8080/sncr/geo/point
+```
+
+### example response
+```
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> POST /sncr/geo/point HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.64.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 133
+> 
+* upload completely sent off: 133 out of 133 bytes
+< HTTP/1.1 200 OK
+< Content-Type: application/json
+< Date: Sat, 21 Mar 2020 12:56:49 GMT
+< Content-Length: 9
+< 
+"France"
+* Connection #0 to host localhost left intact
+* Closing connection 0
+```
+
+### Example for Somewhere off the coast of Ireland
+
+as there is no geolocation data bundled for random oceans, it will fail to resolve and return 400 error
+
+```
+curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [ -5.945750, 53.312652 ]}}]}' -H "Content-Type: application/json" http://localhost:8080/sncr/geo/point
 ```
 
 ### example response:
@@ -96,13 +122,13 @@ curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geom
 > User-Agent: curl/7.64.1
 > Accept: */*
 > Content-Type: application/json
-> Content-Length: 137
+> Content-Length: 136
 > 
-* upload completely sent off: 137 out of 137 bytes
+* upload completely sent off: 136 out of 136 bytes
 < HTTP/1.1 400 Bad Request
 < Content-Type: text/plain; charset=utf-8
 < X-Content-Type-Options: nosniff
-< Date: Fri, 20 Mar 2020 17:48:08 GMT
+< Date: Sat, 21 Mar 2020 12:54:55 GMT
 < Content-Length: 8
 < 
 Failure
