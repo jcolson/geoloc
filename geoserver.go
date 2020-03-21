@@ -104,14 +104,14 @@ func isPointInsidePolygon(fc *geojson.FeatureCollection, point orb.Point) (point
 		multiPoly, isMulti := feature.Geometry.(orb.MultiPolygon)
 		if isMulti {
 			if planar.MultiPolygonContains(multiPoly, point) {
-				return true, feature.Properties.MustString("NAME")
+				return true, feature.Properties.MustString("NAME", feature.Properties.MustString("subunit", "UNKNOWN"))
 			}
 		} else {
 			// Fallback to Polygon
 			polygon, isPoly := feature.Geometry.(orb.Polygon)
 			if isPoly {
 				if planar.PolygonContains(polygon, point) {
-					return true, feature.Properties.MustString("NAME")
+					return true, feature.Properties.MustString("NAME", feature.Properties.MustString("subunit", "UNKNOWN"))
 				}
 			}
 		}

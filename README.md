@@ -16,10 +16,8 @@ go test -v
 ## compile
 
 ```
-#if you need dependencies installed
-go get ./...
-
-go build
+#creates the geojson.go static file (from json file) as well as building the binary
+./build.sh
 ```
 
 for linux target (if you're building on windows/mac/etc)
@@ -38,9 +36,9 @@ to run the service on port 8080
 PORT=8080; ./geoloc
 ```
 
-to run the service on port 8080 and also load external geo json data (geo.json in this instance)
+to run the service on port 8080 and also load external geo json data (geocombined.json in this instance)
 ```
-PORT=8080 EXTERNALDATA=geo.json ./geoloc 
+PORT=8080 EXTERNALDATA=geocombined.json ./geoloc 
 ```
 
 ## get results
