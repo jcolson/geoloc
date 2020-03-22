@@ -7,5 +7,7 @@ POSTPEND="\`"
 cat <(echo "${PREPEND}") geocombined.json <(echo "${POSTPEND}") > geojson.go
 
 go get ./...
-go test -v
+if [[ "${GOOS}" == "" ]] && [[ "${GOARCH}" == "" ]]; then
+    go test -v
+fi
 go build

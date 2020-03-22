@@ -21,6 +21,7 @@ go test -v
 ```
 
 for linux target (if you're building on windows/mac/etc)
+note: this will skip running tests, as we check the environment prior and won't be able to execute tests locally if the arch is different
 
 ```
 env GOOS=linux GOARCH=amd64 ./build.sh 
