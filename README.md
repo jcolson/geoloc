@@ -38,6 +38,21 @@ note: this will skip running tests, as we check the environment prior and won't 
 env GOOS=linux GOARCH=amd64 ./build.sh 
 ```
 
+## Build and push the docker image
+
+<https://hub.docker.com/repository/docker/sncrpc/geoloc>
+
+```
+env GOOS=linux GOARCH=amd64 ./build.sh 
+docker build -t sncrpc/geoloc .
+docker login docker.io
+docker push sncrpc/geoloc
+```
+
+```
+docker run --name geoloc -p 8080:8080 -d sncrpc/geoloc
+```
+
 ## run the server/service
 
 to run the service on port 8080
