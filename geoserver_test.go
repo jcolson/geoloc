@@ -10,6 +10,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"strconv"
+	"strings"
 	"testing"
 
 	"github.com/paulmach/orb"
@@ -59,14 +60,16 @@ func TestGetFeatureCollection(t *testing.T) {
 	}
 
 	for key, loc := range locationTestMap {
-		found, locationName := isPointInsidePolygon(featureCollection, loc)
+		found, properties := isPointInsidePolygon(featureCollection, loc)
+		locationName := properties.MustString("NAME", properties.MustString("subunit", "UNKNOWN"))
 		if !found || locationName != key {
 			t.Errorf("found = %t; want true -- getFeatureCollection() = '%s'; want '%s'\n", found, locationName, key)
 		}
 	}
 
 	for key, loc := range locationTestMapFalse {
-		found, locationName := isPointInsidePolygon(featureCollection, loc)
+		found, properties := isPointInsidePolygon(featureCollection, loc)
+		locationName := properties.MustString("NAME", properties.MustString("subunit", "UNKNOWN"))
 		if found {
 			t.Errorf("found = %t; want true -- getFeatureCollection() = '%s'; want '%s'\n", found, locationName, key)
 		}
@@ -134,7 +137,8 @@ func TestHandlerPos(t *testing.T) {
 
 		// Check the response body is what we expect.
 		expected := "\"" + key + "\"\n"
-		if rr.Body.String() != expected {
+
+		if strings.Contains(rr.Body.String(), expected) {
 			t.Errorf("handler returned unexpected body: got '%v' want %v",
 				rr.Body.String(), expected)
 		}
