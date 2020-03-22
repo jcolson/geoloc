@@ -13,6 +13,17 @@ go get ./...
 go test -v
 ```
 
+## run load tests
+
+```
+jmeter -n -t geoloc.jmx -l geoloc.res -e -o jmeter-report
+```
+
+if you'd like to target a different FQDN
+```
+jmeter -n -t geoloc.jmx -l geoloc.res -e -o jmeter-report -J targethost=some.server.override.if.not.localhost
+```
+
 ## compile
 
 ```

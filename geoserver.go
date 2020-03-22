@@ -50,12 +50,13 @@ func main() {
 	port := os.Getenv("PORT")
 	externalData = os.Getenv("EXTERNALDATA")
 	addr := fmt.Sprintf(":%v", port)
-	fmt.Printf("listening on :%v", port)
+	log.Printf("listening on :%v", port)
 	http.ListenAndServe(addr, nil)
 }
 
 //Handler handles a request for point
 func Handler(w http.ResponseWriter, r *http.Request) {
+	// log.Printf("Request received %s from %s", r.URL.String(), r.RemoteAddr)
 	// request
 	resp, err := matcher(r)
 	if err != nil {
