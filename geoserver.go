@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sync"
 
 	"github.com/paulmach/orb"
 	"github.com/paulmach/orb/geojson"
@@ -17,6 +18,30 @@ import (
 const Endpoint = "/sncr/geo/"
 
 var externalData string
+
+// SafeVisitor to be used to determine if url has been visited
+type SafeFeatureCollectionMap struct {
+	fcMap map[string]*geojson.FeatureCollection
+	mux   *sync.Mutex
+}
+
+var sfcMap SafeFeatureCollectionMap = SafeFeatureCollectionMap{fcMap: make(map[string]*geojson.FeatureCollection), mux: &sync.Mutex{}}
+
+func (sfcMap SafeFeatureCollectionMap) getFeatureCollection(geoFileName string) (*geojson.FeatureCollection, error) {
+	sfcMap.mux.Lock()
+	defer sfcMap.mux.Unlock()
+	fc, ok := sfcMap.fcMap[geoFileName]
+	if !ok {
+		// load geo map, this one isn't cached
+		var err error
+		fc, err = loadGeoDataFromFile(geoFileName)
+		if err != nil {
+			return nil, err
+		}
+		sfcMap.fcMap[geoFileName] = fc
+	}
+	return fc, nil
+}
 
 func main() {
 	sncrGeoHandler := http.HandlerFunc(Handler)
@@ -62,7 +87,8 @@ func matcher(r *http.Request) (resp string, err error) {
 			return "", err
 		}
 		// fmt.Printf("point passed %v", fc.Features[0].Point())
-		geoDataFc, err := loadGeoDataDefault()
+		// geoDataFc, err := loadGeoDataDefault()
+		geoDataFc, err := sfcMap.getFeatureCollection("")
 		if err != nil {
 			return "", err
 		}
@@ -77,22 +103,22 @@ func matcher(r *http.Request) (resp string, err error) {
 	return
 }
 
+// loadGeoDataFromFile retrieves the FeatureCollection json objects for a file geoDataFile
+// if the file passed is an empty string, try to use the environment variable
+// if the environment variable is empty, then try and use the "build in" GEODATA variable
 func loadGeoDataFromFile(geoDataFile string) (*geojson.FeatureCollection, error) {
+	if geoDataFile == "" && externalData == "" {
+		fc, err := geojson.UnmarshalFeatureCollection([]byte(GEODATA))
+		return fc, err
+	} else if geoDataFile == "" && externalData != "" {
+		geoDataFile = externalData
+	}
 	f, err := ioutil.ReadFile(geoDataFile)
 	if err != nil {
-		log.Print(err)
+		log.Printf("Error encountered reading file %v", err)
 		return &geojson.FeatureCollection{}, err
 	}
 	fc, err := geojson.UnmarshalFeatureCollection(f)
-	return fc, err
-}
-
-func loadGeoDataDefault() (*geojson.FeatureCollection, error) {
-	if externalData != "" {
-		fc, err := loadGeoDataFromFile(externalData)
-		return fc, err
-	}
-	fc, err := geojson.UnmarshalFeatureCollection([]byte(GEODATA))
 	return fc, err
 }
 

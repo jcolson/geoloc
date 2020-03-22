@@ -73,22 +73,23 @@ var locationTestMapFalse = map[string]orb.Point{
 	"Somewhere off the coast of Ireland": orb.Point{-5.945750, 53.312652},
 }
 
-func TestLoadGeoData(t *testing.T) {
-	featureCollection, err := loadGeoDataFromFile(EXTGEODATA)
+func TestGetFeatureCollection(t *testing.T) {
+	featureCollection, err := sfcMap.getFeatureCollection(EXTGEODATA)
 	if err != nil {
-		t.Errorf("loadGeoData() = %v; want no f'n error", err)
+		t.Errorf("getFeatureCollection() = %v; want no f'n error", err)
 	}
 
 	for key, loc := range locationTestMap {
 		found, locationName := isPointInsidePolygon(featureCollection, loc)
 		if !found || locationName != key {
-			t.Errorf("found = %t; want true -- loadGeoData() = '%s'; want '%s'\n", found, locationName, key)
+			t.Errorf("found = %t; want true -- getFeatureCollection() = '%s'; want '%s'\n", found, locationName, key)
 		}
 	}
+
 	for key, loc := range locationTestMapFalse {
 		found, locationName := isPointInsidePolygon(featureCollection, loc)
 		if found {
-			t.Errorf("found = %t; want true -- loadGeoData() = '%s'; want '%s'\n", found, locationName, key)
+			t.Errorf("found = %t; want true -- getFeatureCollection() = '%s'; want '%s'\n", found, locationName, key)
 		}
 	}
 }
