@@ -1,4 +1,4 @@
-# geocode service
+# Geocode Service
 
 This service returns what location that point is in, if the geodata is aware of it.
 
@@ -6,7 +6,7 @@ There is bundled data in the executable, this microservice is not dependant on a
 
 ## run tests
 
-```
+```sh
 #if you need dependencies installed
 go get ./...
 
@@ -15,18 +15,19 @@ go test -v
 
 ## run load tests
 
-```
+```sh
 rm -Rf jmeter-report; rm -Rf geoloc.res; jmeter -n -t geoloc.jmx -l geoloc.res -e -o jmeter-report
 ```
 
 if you'd like to target a different FQDN
-```
+
+```sh
 rm -Rf jmeter-report; rm -Rf geoloc.res; jmeter -n -t geoloc.jmx -l geoloc.res -e -o jmeter-report -J targethost=some.server.override.if.not.localhost
 ```
 
 ## compile
 
-```
+```sh
 #creates the geojson.go static file (from json file) as well as building the binary
 ./build.sh
 ```
@@ -34,38 +35,40 @@ rm -Rf jmeter-report; rm -Rf geoloc.res; jmeter -n -t geoloc.jmx -l geoloc.res -
 for linux target (if you're building on windows/mac/etc)
 note: this will skip running tests, as we check the environment prior and won't be able to execute tests locally if the arch is different
 
-```
-env GOOS=linux GOARCH=amd64 ./build.sh 
+```sh
+env GOOS=linux GOARCH=amd64 ./build.sh
 ```
 
 ## Build and push the docker image
 
 <https://hub.docker.com/repository/docker/sncrpc/geoloc>
 
-```
-env GOOS=linux GOARCH=amd64 ./build.sh 
+```sh
+env GOOS=linux GOARCH=amd64 ./build.sh
 docker build -t sncrpc/geoloc .
 docker login docker.io
 docker push sncrpc/geoloc
 ```
 
-```
+```sh
 docker run --name geoloc -p 8080:8080 -d sncrpc/geoloc
 ```
 
-## run the server/service
+## Run the server or service
 
 to run the service on port 8080
-```
+
+```sh
 PORT=8080 ./geoloc
 ```
 
 to run the service on port 8080 and also load external geo json data (geocombined.json in this instance)
-```
-PORT=8080 EXTERNALDATA=geocombined.json ./geoloc 
+
+```sh
+PORT=8080 EXTERNALDATA=geocombined.json ./geoloc
 ```
 
-## get results
+## Interpret Results
 
 the simple service takes a geojson formatted 'point' at the endpoint of /sncr/geo/point
 
@@ -81,16 +84,15 @@ and
 
 that are interesting, look in "NAME" for the name of one of the United States, look in "subunit" for the name of country (rest of the world)
 
-
 ### Example for Texas
 
-```
+```sh
 curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [ -100.000000, 31.000000 ]}}]}' -H "Content-Type: application/json" http://localhost:8080/sncr/geo/point
 ```
 
-### example response:
+### Example Response - Texas
 
-```
+```sh
 *   Trying ::1...
 * TCP_NODELAY set
 * Connected to localhost (::1) port 8080 (#0)
@@ -100,13 +102,13 @@ curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geom
 > Accept: */*
 > Content-Type: application/json
 > Content-Length: 138
-> 
+>
 * upload completely sent off: 138 out of 138 bytes
 < HTTP/1.1 200 OK
 < Content-Type: application/json
 < Date: Sun, 22 Mar 2020 17:39:06 GMT
 < Content-Length: 87
-< 
+<
 {"CENSUSAREA":261231.711,"GEO_ID":"0400000US48","LSAD":"","NAME":"Texas","STATE":"48"}
 * Connection #0 to host localhost left intact
 * Closing connection 0
@@ -114,12 +116,13 @@ curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geom
 
 ### Example for France
 
-```
+```sh
 curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [2.318219, 48.852513]}}]}' -H "Content-Type: application/json" http://localhost:8080/sncr/geo/point
 ```
 
-### example response
-```
+### Example Response - France
+
+```sh
 *   Trying ::1...
 * TCP_NODELAY set
 * Connected to localhost (::1) port 8080 (#0)
@@ -129,30 +132,29 @@ curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geom
 > Accept: */*
 > Content-Type: application/json
 > Content-Length: 133
-> 
+>
 * upload completely sent off: 133 out of 133 bytes
 < HTTP/1.1 200 OK
 < Content-Type: application/json
 < Date: Sun, 22 Mar 2020 17:39:23 GMT
 < Content-Length: 1128
-< 
+<
 {"abbrev":"Fr.","abbrev_len":3,"adm0_a3":"FRA","adm0_a3_is":"FRA","adm0_a3_un":-99,"adm0_a3_us":"FRA","adm0_a3_wb":-99,"adm0_dif":1,"admin":"France","brk_a3":"FRA","brk_diff":0,"brk_group":null,"brk_name":"France","continent":"Europe","economy":"1. Developed region: G7","featurecla":"Admin-0 country","filename":"FRA.geojson","fips_10":null,"formal_en":"French Republic","formal_fr":null,"gdp_md_est":2128000,"gdp_year":-99,"geou_dif":0,"geounit":"France","gu_a3":"FRA","homepart":1,"income_grp":"1. High income: OECD","iso_a2":"FR","iso_a3":"FRA","iso_n3":"250","labelrank":2,"lastcensus":-99,"level":2,"long_len":6,"mapcolor13":11,"mapcolor7":7,"mapcolor8":5,"mapcolor9":9,"name":"France","name_alt":null,"name_len":6,"name_long":"France","name_sort":"France","note_adm0":null,"note_brk":null,"pop_est":64057792,"pop_year":-99,"postal":"F","region_un":"Europe","region_wb":"Europe \u0026 Central Asia","scalerank":1,"sov_a3":"FR1","sovereignt":"France","su_a3":"FRA","su_dif":0,"subregion":"Western Europe","subunit":"France","tiny":-99,"type":"Country","un_a3":"250","wb_a2":"FR","wb_a3":"FRA","wikipedia":-99,"woe_id":-99}
 * Connection #0 to host localhost left intact
 * Closing connection 0
-
 ```
 
 ### Example for Somewhere off the coast of Ireland
 
 as there is no geolocation data bundled for random oceans, it will fail to resolve and return 400 error
 
-```
+```sh
 curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [ -5.945750, 53.312652 ]}}]}' -H "Content-Type: application/json" http://localhost:8080/sncr/geo/point
 ```
 
-### example response:
+### Example Response - Ireland
 
-```
+```sh
 *   Trying ::1...
 * TCP_NODELAY set
 * Connected to localhost (::1) port 8080 (#0)
@@ -162,22 +164,24 @@ curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geom
 > Accept: */*
 > Content-Type: application/json
 > Content-Length: 136
-> 
+>
 * upload completely sent off: 136 out of 136 bytes
 < HTTP/1.1 400 Bad Request
 < Content-Type: text/plain; charset=utf-8
 < X-Content-Type-Options: nosniff
 < Date: Sat, 21 Mar 2020 12:54:55 GMT
 < Content-Length: 8
-< 
+<
 Failure
 * Connection #0 to host localhost left intact
 * Closing connection 0
 ```
 
 ## Logs
+
 Logs are written to standard out in format:
-```
+
+```sh
 2020/03/22 17:28:48  POST /sncr/geo/point
 2020/03/22 17:28:48  POST /sncr/geo/point
 2020/03/22 17:28:48  POST /sncr/geo/point
@@ -192,13 +196,14 @@ Logs are written to standard out in format:
 ```
 
 ## Metrics
+
 Metrics for the service are handled by the standard PROMETHEUS library
 
 Metrics are available at /metrics
 
 example output:
 
-```
+```sh
 # HELP geoserver_http_metric_handler_requests_total Total number of geoserver requests by HTTP code.
 # TYPE geoserver_http_metric_handler_requests_total counter
 geoserver_http_metric_handler_requests_total{code="200"} 127986
