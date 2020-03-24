@@ -38,8 +38,26 @@ note: this will skip running tests, as we check the environment prior and won't 
 ```sh
 env GOOS=linux GOARCH=amd64 ./build.sh
 ```
+## Docker Information
 
-## Build and push the docker image
+### Run the docker image
+
+```sh
+docker run --name geoloc -p 8080:8080 -d sncrpc/geoloc
+```
+
+### Check the docker container's health
+
+```sh
+docker inspect --format='{{json .State.Health}}' geoloc
+```
+
+#### Health response
+```
+{"Status":"healthy","FailingStreak":0,"Log":[{"Start":"2020-03-24T09:01:56.048962417Z","End":"2020-03-24T09:01:56.129634823Z","ExitCode":0,"Output":""}]}
+```
+
+### Build and push the docker image
 
 <https://hub.docker.com/repository/docker/sncrpc/geoloc>
 
@@ -50,11 +68,7 @@ docker login docker.io
 docker push sncrpc/geoloc
 ```
 
-```sh
-docker run --name geoloc -p 8080:8080 -d sncrpc/geoloc
-```
-
-## Run the server or service
+## Run the server or service natively
 
 to run the service on port 8080
 
@@ -63,6 +77,8 @@ PORT=8080 ./geoloc
 ```
 
 to run the service on port 8080 and also load external geo json data (geocombined.json in this instance)
+
+There are several json data files in the repository, they all end with json.  The geocombined.json file is a combination of the geousa.json and the geoworld.json file, which contains Poly's of the United States individual states as well as the rest of world country polygons.
 
 ```sh
 PORT=8080 EXTERNALDATA=geocombined.json ./geoloc
