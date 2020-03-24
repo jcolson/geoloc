@@ -14,11 +14,11 @@
   - [Run the server or service natively](#run-the-server-or-service-natively)
   - [Interpret Results](#interpret-results)
     - [Example for Texas](#example-for-texas)
-    - [Example Response - Texas](#example-response---texas)
+      - [Example Response - Texas](#example-response---texas)
     - [Example for France](#example-for-france)
-    - [Example Response - France](#example-response---france)
+      - [Example Response - France](#example-response---france)
     - [Example for Somewhere off the coast of Ireland](#example-for-somewhere-off-the-coast-of-ireland)
-    - [Example Response - Ireland](#example-response---ireland)
+      - [Example Response - Ireland](#example-response---ireland)
   - [Logs](#logs)
   - [Metrics](#metrics)
 
@@ -132,7 +132,7 @@ that are interesting, look in "NAME" for the name of one of the United States, l
 curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [ -100.000000, 31.000000 ]}}]}' -H "Content-Type: application/json" http://localhost:8080/sncr/geo/point
 ```
 
-### Example Response - Texas
+#### Example Response - Texas
 
 ```sh
 *   Trying ::1...
@@ -162,7 +162,7 @@ curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geom
 curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [2.318219, 48.852513]}}]}' -H "Content-Type: application/json" http://localhost:8080/sncr/geo/point
 ```
 
-### Example Response - France
+#### Example Response - France
 
 ```sh
 *   Trying ::1...
@@ -194,7 +194,7 @@ as there is no geolocation data bundled for random oceans, it will fail to resol
 curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [ -5.945750, 53.312652 ]}}]}' -H "Content-Type: application/json" http://localhost:8080/sncr/geo/point
 ```
 
-### Example Response - Ireland
+#### Example Response - Ireland
 
 ```sh
 *   Trying ::1...
