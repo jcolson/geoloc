@@ -1,3 +1,29 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Geocode Service](#geocode-service)
+  - [run tests](#run-tests)
+  - [run load tests](#run-load-tests)
+  - [compile](#compile)
+  - [Docker Information](#docker-information)
+    - [Run the docker image](#run-the-docker-image)
+    - [Check the docker container's health](#check-the-docker-containers-health)
+      - [Health response](#health-response)
+    - [Build and push the docker image](#build-and-push-the-docker-image)
+  - [Run the server or service natively](#run-the-server-or-service-natively)
+  - [Interpret Results](#interpret-results)
+    - [Example for Texas](#example-for-texas)
+    - [Example Response - Texas](#example-response---texas)
+    - [Example for France](#example-for-france)
+    - [Example Response - France](#example-response---france)
+    - [Example for Somewhere off the coast of Ireland](#example-for-somewhere-off-the-coast-of-ireland)
+    - [Example Response - Ireland](#example-response---ireland)
+  - [Logs](#logs)
+  - [Metrics](#metrics)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Geocode Service
 
 This service returns what location that point is in, if the geodata is aware of it.
