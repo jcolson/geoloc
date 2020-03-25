@@ -83,7 +83,11 @@ docker inspect --format='{{json .State.Health}}' geoloc
 {"Status":"healthy","FailingStreak":0,"Log":[{"Start":"2020-03-24T09:01:56.048962417Z","End":"2020-03-24T09:01:56.129634823Z","ExitCode":0,"Output":""}]}
 ```
 
-### Build and push the docker image
+### Docker images built automatically from github
+
+<https://hub.docker.com/repository/docker/sncrpc/geoloc/builds>
+
+### Manually Build and push the docker image
 
 <https://hub.docker.com/repository/docker/sncrpc/geoloc>
 
