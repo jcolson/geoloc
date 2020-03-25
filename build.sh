@@ -11,4 +11,4 @@ go get ./...
 if [[ "${GOOS}" == "" ]] && [[ "${GOARCH}" == "" ]]; then
     go test -v
 fi
-go build
+go build -o geoloc
