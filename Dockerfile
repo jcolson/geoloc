@@ -19,4 +19,4 @@ COPY --from=builder /geoloc/src/geoloc /geoloc
 
 HEALTHCHECK CMD wget --quiet --tries=1 --spider http://localhost:8080/metrics || exit 1
 
-CMD PORT=8080 nohup /geoloc
+CMD PORT=8080 /geoloc
