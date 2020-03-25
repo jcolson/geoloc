@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 DATASET="geocombined.json"
 PREPEND="package main
 
