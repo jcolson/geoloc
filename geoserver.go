@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"sync"
 
 	"github.com/paulmach/orb"
@@ -23,7 +24,11 @@ const Endpoint = "/sncr/geo/"
 
 const MetricsEndpoint = "/metrics"
 
+const HASENRICHED bool = len(GEODATAENRICHED) > 3
+
 var externalData string
+
+var externalEnrichedData string
 
 // SafeVisitor to be used to determine if url has been visited
 type SafeFeatureCollectionMap struct {
@@ -33,18 +38,19 @@ type SafeFeatureCollectionMap struct {
 
 var sfcMap SafeFeatureCollectionMap = SafeFeatureCollectionMap{fcMap: make(map[string]*geojson.FeatureCollection), mux: &sync.Mutex{}}
 
-func (sfcMap SafeFeatureCollectionMap) getFeatureCollection(geoFileName string) (*geojson.FeatureCollection, error) {
+func (sfcMap SafeFeatureCollectionMap) getFeatureCollection(geoFileName string, enriched bool) (*geojson.FeatureCollection, error) {
 	sfcMap.mux.Lock()
 	defer sfcMap.mux.Unlock()
-	fc, ok := sfcMap.fcMap[geoFileName]
+	geoFileKey := geoFileName + strconv.FormatBool(enriched)
+	fc, ok := sfcMap.fcMap[geoFileKey]
 	if !ok {
 		// load geo map, this one isn't cached
 		var err error
-		fc, err = loadGeoDataFromFile(geoFileName)
+		fc, err = loadGeoDataFromFile(geoFileName, enriched)
 		if err != nil {
 			return nil, err
 		}
-		sfcMap.fcMap[geoFileName] = fc
+		sfcMap.fcMap[geoFileKey] = fc
 	}
 	return fc, nil
 }
@@ -69,6 +75,7 @@ func main() {
 	// server
 	port := os.Getenv("PORT")
 	externalData = os.Getenv("EXTERNALDATA")
+	externalEnrichedData = os.Getenv("EXTERNALENRICHEDDATA")
 	addr := fmt.Sprintf(":%v", port)
 	log.Printf("listening on :%v", port)
 	http.ListenAndServe(addr, nil)
@@ -108,15 +115,29 @@ func matcher(r *http.Request) (resp geojson.Properties, err error) {
 			return geojson.Properties{}, err
 		}
 		// fmt.Printf("point passed %v", fc.Features[0].Point())
-		geoDataFc, err := sfcMap.getFeatureCollection("")
+		geoDataFc, err := sfcMap.getFeatureCollection("", false)
 		if err != nil {
 			return geojson.Properties{}, err
 		}
-		pointInside, properties := isPointInsidePolygon(geoDataFc, fc.Features[0].Point())
+		pointInside, feature := isPointInsidePolygon(geoDataFc, fc.Features[0].Point())
 		if !pointInside {
 			return geojson.Properties{}, fmt.Errorf("Failure")
 		}
-		return properties, nil
+		// if we've pre-embedded enriched data
+		if HASENRICHED {
+			fcEnriched, err := sfcMap.getFeatureCollection("", true)
+			if err != nil {
+				log.Printf("Could not enrich data: %v", err)
+			} else {
+				pointInsideEnriched, featureEnriched := isPointInsidePolygon(fcEnriched, fc.Features[0].Point())
+				if pointInsideEnriched {
+					for key, value := range featureEnriched.Properties {
+						feature.Properties["ENRICHED_"+key] = value
+					}
+				}
+			}
+		}
+		return feature.Properties, nil
 	default:
 		err = fmt.Errorf("Bad object type")
 	}
@@ -125,13 +146,18 @@ func matcher(r *http.Request) (resp geojson.Properties, err error) {
 
 // loadGeoDataFromFile retrieves the FeatureCollection json objects for a file geoDataFile
 // if the file passed is an empty string, try to use the environment variable
-// if the environment variable is empty, then try and use the "build in" GEODATA variable
-func loadGeoDataFromFile(geoDataFile string) (*geojson.FeatureCollection, error) {
-	if geoDataFile == "" && externalData == "" {
+// if the environment variable is empty, then try and use the "build in" GEODATA or GEODATAENRICHED variable
+func loadGeoDataFromFile(geoDataFile string, enriched bool) (*geojson.FeatureCollection, error) {
+	if geoDataFile == "" && externalData == "" && !enriched {
 		fc, err := geojson.UnmarshalFeatureCollection([]byte(GEODATA))
 		return fc, err
-	} else if geoDataFile == "" && externalData != "" {
+	} else if geoDataFile == "" && externalEnrichedData == "" && enriched {
+		fc, err := geojson.UnmarshalFeatureCollection([]byte(GEODATAENRICHED))
+		return fc, err
+	} else if geoDataFile == "" && externalData != "" && !enriched {
 		geoDataFile = externalData
+	} else if geoDataFile == "" && externalEnrichedData != "" && enriched {
+		geoDataFile = externalEnrichedData
 	}
 	f, err := ioutil.ReadFile(geoDataFile)
 	if err != nil {
@@ -144,23 +170,23 @@ func loadGeoDataFromFile(geoDataFile string) (*geojson.FeatureCollection, error)
 
 // isPointInsidePolygon runs through the MultiPolygon and Polygons within a
 // feature collection and checks if a point (long/lat) lies within it.
-func isPointInsidePolygon(fc *geojson.FeatureCollection, point orb.Point) (pointInside bool, properties geojson.Properties) {
+func isPointInsidePolygon(fc *geojson.FeatureCollection, point orb.Point) (pointInside bool, feature *geojson.Feature) {
 	for _, feature := range fc.Features {
 		// Try on a MultiPolygon to begin
 		multiPoly, isMulti := feature.Geometry.(orb.MultiPolygon)
 		if isMulti {
 			if planar.MultiPolygonContains(multiPoly, point) {
-				return true, feature.Properties //.MustString("NAME", feature.Properties.MustString("subunit", "UNKNOWN"))
+				return true, feature //.MustString("NAME", feature.Properties.MustString("subunit", "UNKNOWN"))
 			}
 		} else {
 			// Fallback to Polygon
 			polygon, isPoly := feature.Geometry.(orb.Polygon)
 			if isPoly {
 				if planar.PolygonContains(polygon, point) {
-					return true, feature.Properties //.MustString("NAME", feature.Properties.MustString("subunit", "UNKNOWN"))
+					return true, feature //.MustString("NAME", feature.Properties.MustString("subunit", "UNKNOWN"))
 				}
 			}
 		}
 	}
-	return false, geojson.Properties{}
+	return false, &geojson.Feature{}
 }

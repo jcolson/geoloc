@@ -14,6 +14,8 @@
     - [Manually Build and push the docker image](#manually-build-and-push-the-docker-image)
   - [Run the server or service natively](#run-the-server-or-service-natively)
   - [Interpret Results](#interpret-results)
+    - [Example for Houston, Texas](#example-for-houston-texas)
+    - [Example Response - Houston Texas](#example-response---houston-texas)
     - [Example for Texas](#example-for-texas)
       - [Example Response - Texas](#example-response---texas)
     - [Example for France](#example-for-france)
@@ -117,21 +119,46 @@ There are several json data files in the repository, they all end with json.  Th
 PORT=8080 EXTERNALDATA=geocombined.json ./geoloc
 ```
 
+```sh
+PORT=8080 EXTERNALDATA=geoworld.json EXTERNALENRICHEDDATA=geousa.json ./geoloc
+```
+
 ## Interpret Results
 
 the simple service takes a geojson formatted 'point' at the endpoint of /sncr/geo/point
 
 the service returns what location that point is in, if the geodata is aware of it
 
-responses are of type Properties from Feature from FeatureCollection ...  note that the two types of properties that are used by default contain fields
+responses are of type Properties from Feature from geojson a FeatureCollection and can be different based on the json files configured runtime (or builtin via build.sh).
 
-"NAME"
+### Example for Houston, Texas
 
-and
+```sh
+curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [ -95.356004,29.744175 ]}}]}' -H "Content-Type: application/json" http://localhost:8080/sncr/geo/point
+```
+### Example Response - Houston Texas
 
-"subunit"
-
-that are interesting, look in "NAME" for the name of one of the United States, look in "subunit" for the name of country (rest of the world)
+```sh
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> POST /sncr/geo/point HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.64.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 136
+> 
+* upload completely sent off: 136 out of 136 bytes
+< HTTP/1.1 200 OK
+< Content-Type: application/json
+< Date: Thu, 26 Mar 2020 18:11:07 GMT
+< Content-Length: 784
+< 
+{"CityName":"HOUSTON","Shape_Area":65.109247789,"Shape_Leng":63.5254179122,"abbrev":"Tex.","adm0_sr":4,"adm1_code":"USA-3536","adm1_code_":"USA-3536","admin":"United States of America","admin0_lab":2,"area_sqkm":0,"big_code":null,"check_me":0,"code_hasc":"US.TX","code_local":"US48","datarank":1,"diss_me":3536,"featurecla":"Admin-1 scale rank","gadm_level":1,"hasc_maybe":null,"iso_3166_2":"US-TX","iso_a2":"US","labelrank":0,"mapcolor13":1,"mapcolor9":1,"name":"Texas","name_alt":"TX|Tex.","name_len":5,"name_local":null,"note":null,"postal":"TX","provnum_ne":0,"region":"South","region_big":"West South Central","region_cod":null,"sameascity":-99,"scalerank":2,"sr_adm0_a3":"USA","sr_sov_a3":"US1","type":"State","type_en":"State","wikipedia":"http://en.wikipedia.org/wiki/Texas"}
+* Connection #0 to host localhost left intact
+* Closing connection 0
+```
 
 ### Example for Texas
 
@@ -151,14 +178,14 @@ curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geom
 > Accept: */*
 > Content-Type: application/json
 > Content-Length: 138
->
+> 
 * upload completely sent off: 138 out of 138 bytes
 < HTTP/1.1 200 OK
 < Content-Type: application/json
-< Date: Sun, 22 Mar 2020 17:39:06 GMT
-< Content-Length: 87
-<
-{"CENSUSAREA":261231.711,"GEO_ID":"0400000US48","LSAD":"","NAME":"Texas","STATE":"48"}
+< Date: Thu, 26 Mar 2020 18:12:43 GMT
+< Content-Length: 784
+< 
+{"CityName":"HOUSTON","Shape_Area":65.109247789,"Shape_Leng":63.5254179122,"abbrev":"Tex.","adm0_sr":4,"adm1_code":"USA-3536","adm1_code_":"USA-3536","admin":"United States of America","admin0_lab":2,"area_sqkm":0,"big_code":null,"check_me":0,"code_hasc":"US.TX","code_local":"US48","datarank":1,"diss_me":3536,"featurecla":"Admin-1 scale rank","gadm_level":1,"hasc_maybe":null,"iso_3166_2":"US-TX","iso_a2":"US","labelrank":0,"mapcolor13":1,"mapcolor9":1,"name":"Texas","name_alt":"TX|Tex.","name_len":5,"name_local":null,"note":null,"postal":"TX","provnum_ne":0,"region":"South","region_big":"West South Central","region_cod":null,"sameascity":-99,"scalerank":2,"sr_adm0_a3":"USA","sr_sov_a3":"US1","type":"State","type_en":"State","wikipedia":"http://en.wikipedia.org/wiki/Texas"}
 * Connection #0 to host localhost left intact
 * Closing connection 0
 ```
@@ -181,14 +208,14 @@ curl -v -d '{ "type": "FeatureCollection","features": [{ "type": "Feature","geom
 > Accept: */*
 > Content-Type: application/json
 > Content-Length: 133
->
+> 
 * upload completely sent off: 133 out of 133 bytes
 < HTTP/1.1 200 OK
 < Content-Type: application/json
-< Date: Sun, 22 Mar 2020 17:39:23 GMT
-< Content-Length: 1128
-<
-{"abbrev":"Fr.","abbrev_len":3,"adm0_a3":"FRA","adm0_a3_is":"FRA","adm0_a3_un":-99,"adm0_a3_us":"FRA","adm0_a3_wb":-99,"adm0_dif":1,"admin":"France","brk_a3":"FRA","brk_diff":0,"brk_group":null,"brk_name":"France","continent":"Europe","economy":"1. Developed region: G7","featurecla":"Admin-0 country","filename":"FRA.geojson","fips_10":null,"formal_en":"French Republic","formal_fr":null,"gdp_md_est":2128000,"gdp_year":-99,"geou_dif":0,"geounit":"France","gu_a3":"FRA","homepart":1,"income_grp":"1. High income: OECD","iso_a2":"FR","iso_a3":"FRA","iso_n3":"250","labelrank":2,"lastcensus":-99,"level":2,"long_len":6,"mapcolor13":11,"mapcolor7":7,"mapcolor8":5,"mapcolor9":9,"name":"France","name_alt":null,"name_len":6,"name_long":"France","name_sort":"France","note_adm0":null,"note_brk":null,"pop_est":64057792,"pop_year":-99,"postal":"F","region_un":"Europe","region_wb":"Europe \u0026 Central Asia","scalerank":1,"sov_a3":"FR1","sovereignt":"France","su_a3":"FRA","su_dif":0,"subregion":"Western Europe","subunit":"France","tiny":-99,"type":"Country","un_a3":"250","wb_a2":"FR","wb_a3":"FRA","wikipedia":-99,"woe_id":-99}
+< Date: Thu, 26 Mar 2020 18:13:00 GMT
+< Content-Length: 727
+< 
+{"CityName":"PARIS","Shape_Area":1.47914248773,"Shape_Leng":6.15489690733,"abbrev":null,"adm0_sr":1,"adm1_code":"FRA-2680","adm1_code_":"FRA-2680","admin":"France","admin0_lab":2,"area_sqkm":0,"big_code":null,"check_me":0,"code_hasc":null,"code_local":null,"datarank":3,"diss_me":2680,"featurecla":"Admin-1 scale rank","gadm_level":1,"hasc_maybe":null,"iso_3166_2":"FR-","iso_a2":"FR","labelrank":3,"mapcolor13":11,"mapcolor9":9,"name":"Île-de-France","name_alt":null,"name_len":13,"name_local":null,"note":null,"postal":null,"provnum_ne":10,"region":"Île-de-France","region_big":null,"region_cod":null,"sameascity":-99,"scalerank":3,"sr_adm0_a3":"FRA","sr_sov_a3":"FR1","type":"Région","type_en":"Region","wikipedia":null}
 * Connection #0 to host localhost left intact
 * Closing connection 0
 ```

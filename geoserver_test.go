@@ -54,22 +54,22 @@ func loadTestData(t *testing.T) {
 
 func TestGetFeatureCollection(t *testing.T) {
 	loadTestData(t)
-	featureCollection, err := sfcMap.getFeatureCollection(EXTGEODATA)
+	featureCollection, err := sfcMap.getFeatureCollection(EXTGEODATA, false)
 	if err != nil {
 		t.Errorf("getFeatureCollection() = %v; want no f'n error", err)
 	}
 
 	for key, loc := range locationTestMap {
-		found, properties := isPointInsidePolygon(featureCollection, loc)
-		locationName := properties.MustString("NAME", properties.MustString("subunit", "UNKNOWN"))
+		found, feature := isPointInsidePolygon(featureCollection, loc)
+		locationName := feature.Properties.MustString("NAME", feature.Properties.MustString("subunit", "UNKNOWN"))
 		if !found || locationName != key {
 			t.Errorf("found = %t; want true -- getFeatureCollection() = '%s'; want '%s'\n", found, locationName, key)
 		}
 	}
 
 	for key, loc := range locationTestMapFalse {
-		found, properties := isPointInsidePolygon(featureCollection, loc)
-		locationName := properties.MustString("NAME", properties.MustString("subunit", "UNKNOWN"))
+		found, feature := isPointInsidePolygon(featureCollection, loc)
+		locationName := feature.Properties.MustString("NAME", feature.Properties.MustString("subunit", "UNKNOWN"))
 		if found {
 			t.Errorf("found = %t; want true -- getFeatureCollection() = '%s'; want '%s'\n", found, locationName, key)
 		}
