@@ -24,7 +24,7 @@ const Endpoint = "/sncr/geo/"
 
 const MetricsEndpoint = "/metrics"
 
-const HASENRICHED bool = len(GEODATAENRICHED) > 3
+var HASENRICHED bool = len(GEODATAENRICHED) > 3
 
 var externalData string
 
@@ -76,6 +76,10 @@ func main() {
 	port := os.Getenv("PORT")
 	externalData = os.Getenv("EXTERNALDATA")
 	externalEnrichedData = os.Getenv("EXTERNALENRICHEDDATA")
+	// if we're using external data, then use it for enriched as well
+	if externalData != "" && externalEnrichedData == "" {
+		HASENRICHED = false
+	}
 	addr := fmt.Sprintf(":%v", port)
 	log.Printf("listening on :%v", port)
 	http.ListenAndServe(addr, nil)

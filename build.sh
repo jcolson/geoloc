@@ -14,7 +14,7 @@ const GEODATAENRICHED string = \`"
 POSTPEND="\`"
 
 # to compare how slow the enriched is
-BUILDBOTH="true"
+#BUILDBOTH="true"
 
 ## ADD THE ENRICHEMENT VARIABLE (cities)
 if [[ "${DATASET_ENRICHED}" == "" ]] || [[ "${BUILDBOTH}" == "true" ]]; then

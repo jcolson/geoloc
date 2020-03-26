@@ -115,6 +115,10 @@ to run the service on port 8080 and also load external geo json data (geocombine
 
 There are several json data files in the repository, they all end with json.  The geocombined.json file is a combination of the geousa.json and the geoworld.json file, which contains Poly's of the United States individual states as well as the rest of world country polygons.
 
+If you decide to use externaldata, then the built-in enriched data will not be used either, so you'll need to pass EXTERNALENRICHEDDATA if you'd like a second data set to enrich the first.
+
+Enriched data sets prepend ENRICHED_ to their property names to avoid collisions.
+
 ```sh
 PORT=8080 EXTERNALDATA=geocombined.json ./geoloc
 ```
