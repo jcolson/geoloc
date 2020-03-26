@@ -31,6 +31,8 @@ This service returns what location that point is in, if the geodata is aware of 
 
 There is bundled data in the executable, this microservice is not dependant on anything else.
 
+The bundled data set default is noted by the ```DATASET="ne_10m_admin_1_states_provinces.json"``` in build.sh
+
 ## run tests
 
 ```sh
