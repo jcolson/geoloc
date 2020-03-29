@@ -1,0 +1,2 @@
+*.json linguist-detectable=true
+*.js linguist-detectable=true
