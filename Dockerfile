@@ -1,11 +1,9 @@
 ARG BASE=alpine:latest
 FROM $BASE AS builder
 
-# needed gzip in the builder docker image because busybox gzip gives an "gzip: invalid magic" when building on hub.docker
 RUN apk add --no-cache \
     bash \
     go \
-    gzip \
     git
 
 COPY . /geoloc/src
