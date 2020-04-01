@@ -33,7 +33,10 @@ This service returns what location that point is in, if the geodata is aware of 
 
 There is bundled data in the executable, this microservice is not dependant on anything else.
 
-The bundled data set default is noted by the ```DATASET="ne_10m_admin_1_states_provinces.json"``` in build.sh
+The bundled data set default is noted by the ```DATASET="cities+ne_10m.geojson"``` in build.sh
+that file is ```cities.json``` that was joined via QGIS with ```ne_10m_admin_1_states_provinces.json``` and then
+to create ```citiesjoin.geojson``` that was then merged with ```ne_10m_admin_1_states_provinces.json``` to make
+it finally.
 
 ## run tests
 
@@ -134,6 +137,10 @@ the simple service takes a geojson formatted 'point' at the endpoint of /sncr/ge
 the service returns what location that point is in, if the geodata is aware of it
 
 responses are of type Properties from Feature from geojson a FeatureCollection and can be different based on the json files configured runtime (or builtin via build.sh).
+
+todo: in progress: joining data  
+qgis - vector - join attributes by location
+
 
 ### Example for Houston, Texas
 
