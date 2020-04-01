@@ -1,14 +1,14 @@
 ARG BASE=alpine:latest
 FROM $BASE AS builder
 
-# needed gzip in the builder docker image because busybox gzip gives an "gzip: invalid magic" when building on hub.docker
 RUN apk add --no-cache \
     bash \
     go \
-    gzip \
-    git
+    git-lfs
 
-COPY . /geoloc/src
+# can't use this COPY, but will try to checkout the exact same revision from github, due to lfs
+COPY . /geoloc/src-orig
+RUN cd /geoloc/src-orig && export REVISION=`git rev-parse HEAD` && git clone https://github.com/jcolson/geoloc /geoloc/src && cd /geoloc/src && git checkout ${REVISION}
 
 # compile
 RUN cd /geoloc/src && ./build.sh
