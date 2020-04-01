@@ -21,15 +21,15 @@ if [[ "${DATASET_ENRICHED}" == "" ]] || [[ "${BUILDBOTH}" == "true" ]]; then
     cat <(echo "${PREPEND}") <(cat "${DATASET}.gz" | gzip -d | sed 's/\`/` + "`" + `/g') <(echo "${POSTPEND}") <(echo "${PREPEND_ENRICHED}") <(echo "${POSTPEND}") > geojson.go
     go get ./...
     if [[ "${GOOS}" == "" ]] && [[ "${GOARCH}" == "" ]]; then
-        go test -v
+        go test -v || exit 1
     fi
 fi
 if [[ "${DATASET_ENRICHED}" != "" ]]; then
     cat <(echo "${PREPEND}") <(cat "${DATASET}.gz" | gzip -d | sed 's/\`/` + "`" + `/g') <(echo "${POSTPEND}") <(echo "${PREPEND_ENRICHED}") <(cat "${DATASET_ENRICHED}" | sed 's/\`/` + "`" + `/g') <(echo "${POSTPEND}") > geojson.go
     go get ./...
     if [[ "${GOOS}" == "" ]] && [[ "${GOARCH}" == "" ]]; then
-        go test -v
+        go test -v || exit 1
     fi
 fi
 
-go build -o geoloc
+go build -o geoloc || exit 1
