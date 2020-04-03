@@ -44,6 +44,6 @@ FROM $BASE
 COPY --from=builder /geoloc/src-orig/geoloc /geoloc
 COPY --from=builder /geoloc/src-orig/whosonfirst.geojson /whosonfirst.geojson
 
-#HEALTHCHECK CMD wget --quiet --tries=1 --post-data '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [ -95.356004,29.744175 ]}}]}' -O - http://localhost:8080/sncr/geo/point | grep HOUSTON 2>&1 > /dev/null || false
+HEALTHCHECK CMD wget --quiet --tries=1 --post-data '{ "type": "FeatureCollection","features": [{ "type": "Feature","geometry": {"type": "Point", "coordinates": [ -95.356004,29.744175 ]}}]}' -O - http://localhost:8080/sncr/geo/point | grep HOUSTON 2>&1 > /dev/null || false
 
 CMD PORT=8080 EXTERNALDATA=/whosonfirst.geojson /geoloc
