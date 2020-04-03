@@ -75,10 +75,10 @@ env GOOS=linux GOARCH=amd64 ./build.sh
 ## Docker Information
 
 The docker image now downloads the latest geojson data from whosonfirst:
-(Place Types Definitions)[https://www.whosonfirst.org/docs/placetypes/]
-(locality that is downloaded)[https://dist.whosonfirst.org/bundles/whosonfirst-data-locality-latest.tar.bz2]
-(region that is downloaded)[https://dist.whosonfirst.org/bundles/whosonfirst-data-region-latest.tar.bz2]
-(country that is downloaded)[https://dist.whosonfirst.org/bundles/whosonfirst-data-country-latest.tar.bz2]
+[Place Types Definitions](https://www.whosonfirst.org/docs/placetypes/)
+[locality that is downloaded](https://dist.whosonfirst.org/bundles/whosonfirst-data-locality-latest.tar.bz2)
+[region that is downloaded](https://dist.whosonfirst.org/bundles/whosonfirst-data-region-latest.tar.bz2)
+[country that is downloaded](https://dist.whosonfirst.org/bundles/whosonfirst-data-country-latest.tar.bz2)
 
 It then combines them all usnig the ```jsonconcat.sh``` script and creates a file for use: ```/whosonfirst.geojson```
 
