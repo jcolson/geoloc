@@ -2,6 +2,9 @@
 #DATASET="geocombined.json"
 # Data set from data.world
 DATASET="cities+ne_10m.geojson"
+# data set from whosonfirst
+#DATASET=/Users/jcolson/Downloads/whosonfirst.geojson
+#DATASET=whosonfirst.geojson
 # DATASET_ENRICHED="cities.json"
 PREPEND="package main
 
@@ -18,14 +21,22 @@ POSTPEND="\`"
 
 ## ADD THE ENRICHEMENT VARIABLE (cities)
 if [[ "${DATASET_ENRICHED}" == "" ]] || [[ "${BUILDBOTH}" == "true" ]]; then
-    cat <(echo "${PREPEND}") <(gzip -cd "${DATASET}.gz" | sed 's/\`/` + "`" + `/g') <(echo "${POSTPEND}") <(echo "${PREPEND_ENRICHED}") <(echo "${POSTPEND}") > geojson.go
+    if [[ -f "${DATASET}" ]]; then 
+        cat <(echo "${PREPEND}") <(cat "${DATASET}" | sed 's/\`/` + "`" + `/g') <(echo "${POSTPEND}") <(echo "${PREPEND_ENRICHED}") <(echo "${POSTPEND}") > geojson.go        
+    else
+        cat <(echo "${PREPEND}") <(gzip -cd "${DATASET}.gz" | sed 's/\`/` + "`" + `/g') <(echo "${POSTPEND}") <(echo "${PREPEND_ENRICHED}") <(echo "${POSTPEND}") > geojson.go
+    fi
     go get ./...
     if [[ "${GOOS}" == "" ]] && [[ "${GOARCH}" == "" ]]; then
         go test -v || exit 1
     fi
 fi
 if [[ "${DATASET_ENRICHED}" != "" ]]; then
-    cat <(echo "${PREPEND}") <(gzip -cd "${DATASET}.gz" | sed 's/\`/` + "`" + `/g') <(echo "${POSTPEND}") <(echo "${PREPEND_ENRICHED}") <(cat "${DATASET_ENRICHED}" | sed 's/\`/` + "`" + `/g') <(echo "${POSTPEND}") > geojson.go
+    if [[ -f "${DATASET}" ]]; then 
+        cat <(echo "${PREPEND}") <(cat "${DATASET}" | sed 's/\`/` + "`" + `/g') <(echo "${POSTPEND}") <(echo "${PREPEND_ENRICHED}") <(cat "${DATASET_ENRICHED}" | sed 's/\`/` + "`" + `/g') <(echo "${POSTPEND}") > geojson.go
+    else
+        cat <(echo "${PREPEND}") <(gzip -cd "${DATASET}.gz" | sed 's/\`/` + "`" + `/g') <(echo "${POSTPEND}") <(echo "${PREPEND_ENRICHED}") <(cat "${DATASET_ENRICHED}" | sed 's/\`/` + "`" + `/g') <(echo "${POSTPEND}") > geojson.go
+    fi
     go get ./...
     if [[ "${GOOS}" == "" ]] && [[ "${GOARCH}" == "" ]]; then
         go test -v || exit 1
