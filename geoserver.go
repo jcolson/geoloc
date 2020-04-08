@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -29,6 +30,20 @@ var HASENRICHED bool = len(GEODATAENRICHED) > 3
 var externalData string
 
 var externalEnrichedData string
+
+var findFast bool
+
+func getenvBool(key string) (bool, error) {
+	s := os.Getenv(key)
+	if s == "" {
+		return false, errors.New("getenv: environment variable empty")
+	}
+	v, err := strconv.ParseBool(s)
+	if err != nil {
+		return false, err
+	}
+	return v, nil
+}
 
 // SafeVisitor to be used to determine if url has been visited
 type SafeFeatureCollectionMap struct {
@@ -80,6 +95,7 @@ func main() {
 	if externalData != "" && externalEnrichedData == "" {
 		HASENRICHED = false
 	}
+	findFast, _ = getenvBool("FINDFAST")
 	addr := fmt.Sprintf(":%v", port)
 	log.Printf("listening on :%v", port)
 	http.ListenAndServe(addr, nil)
@@ -105,27 +121,26 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 }
 
 // Matcher exctract from the url witch geoJSON object we want
-func matcher(r *http.Request) (resp geojson.Properties, err error) {
+func matcher(r *http.Request) (resp []geojson.Properties, err error) {
 	objectType := r.URL.Path[len(Endpoint):]
-	// fmt.Printf("objecttype: %s\n", objectType)
 	switch objectType {
 	case "point":
+		returnProperties := make([]geojson.Properties, 0, 3)
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			return geojson.Properties{}, err
+			return returnProperties, err
 		}
 		fc, err := geojson.UnmarshalFeatureCollection(body)
 		if err != nil {
-			return geojson.Properties{}, err
+			return returnProperties, err
 		}
-		// fmt.Printf("point passed %v", fc.Features[0].Point())
 		geoDataFc, err := sfcMap.getFeatureCollection("", false)
 		if err != nil {
-			return geojson.Properties{}, err
+			return returnProperties, err
 		}
 		pointInside, feature := isPointInsidePolygon(geoDataFc, fc.Features[0].Point())
 		if !pointInside {
-			return geojson.Properties{}, fmt.Errorf("Failure")
+			return returnProperties, fmt.Errorf("Failure")
 		}
 		// if we've pre-embedded enriched data
 		if HASENRICHED {
@@ -135,13 +150,20 @@ func matcher(r *http.Request) (resp geojson.Properties, err error) {
 			} else {
 				pointInsideEnriched, featureEnriched := isPointInsidePolygon(fcEnriched, fc.Features[0].Point())
 				if pointInsideEnriched {
-					for key, value := range featureEnriched.Properties {
-						feature.Properties["ENRICHED_"+key] = value
+					for _, anFcFeature := range featureEnriched {
+						for keyFcFeature, valueFcFeature := range anFcFeature.Properties {
+							for _, anFeature := range feature {
+								anFeature.Properties["ENRICHED_"+keyFcFeature] = valueFcFeature
+							}
+						}
 					}
 				}
 			}
 		}
-		return feature.Properties, nil
+		for _, anFeature := range feature {
+			returnProperties = append(returnProperties, anFeature.Properties)
+		}
+		return returnProperties, nil
 	default:
 		err = fmt.Errorf("Bad object type")
 	}
@@ -174,23 +196,33 @@ func loadGeoDataFromFile(geoDataFile string, enriched bool) (*geojson.FeatureCol
 
 // isPointInsidePolygon runs through the MultiPolygon and Polygons within a
 // feature collection and checks if a point (long/lat) lies within it.
-func isPointInsidePolygon(fc *geojson.FeatureCollection, point orb.Point) (pointInside bool, feature *geojson.Feature) {
+func isPointInsidePolygon(fc *geojson.FeatureCollection, point orb.Point) (pointInside bool, feature []*geojson.Feature) {
+	found := false
+	returnFeatures := make([]*geojson.Feature, 0, 3)
 	for _, feature := range fc.Features {
 		// Try on a MultiPolygon to begin
 		multiPoly, isMulti := feature.Geometry.(orb.MultiPolygon)
 		if isMulti {
 			if planar.MultiPolygonContains(multiPoly, point) {
-				return true, feature //.MustString("NAME", feature.Properties.MustString("subunit", "UNKNOWN"))
+				found = true
+				returnFeatures = append(returnFeatures, feature)
+				if findFast {
+					return found, returnFeatures
+				}
 			}
 		} else {
 			// Fallback to Polygon
 			polygon, isPoly := feature.Geometry.(orb.Polygon)
 			if isPoly {
 				if planar.PolygonContains(polygon, point) {
-					return true, feature //.MustString("NAME", feature.Properties.MustString("subunit", "UNKNOWN"))
+					found = true
+					returnFeatures = append(returnFeatures, feature)
+					if findFast {
+						return found, returnFeatures
+					}
 				}
 			}
 		}
 	}
-	return false, &geojson.Feature{}
+	return found, returnFeatures
 }

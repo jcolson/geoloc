@@ -1,0 +1,255 @@
+whosonfirst-data-admin-ad - Andorra
+whosonfirst-data-admin-ae - United Arab Emirates
+whosonfirst-data-admin-af - Afghanistan
+whosonfirst-data-admin-ag - Antigua and Barbuda
+whosonfirst-data-admin-ai - Anguilla
+whosonfirst-data-admin-al - Albania
+whosonfirst-data-admin-am - Armenia
+whosonfirst-data-admin-ao - Angola
+whosonfirst-data-admin-aq - Antarctica
+whosonfirst-data-admin-ar - Argentina
+whosonfirst-data-admin-as - American Samoa
+whosonfirst-data-admin-at - Austria
+whosonfirst-data-admin-au - Australia
+whosonfirst-data-admin-aw - Aruba
+whosonfirst-data-admin-ax - Åland Islands
+whosonfirst-data-admin-az - Azerbaijan
+whosonfirst-data-admin-ba - Bosnia and Herzegovina
+whosonfirst-data-admin-bb - Barbados
+whosonfirst-data-admin-bd - Bangladesh
+whosonfirst-data-admin-be - Belgium
+whosonfirst-data-admin-bf - Burkina Faso
+whosonfirst-data-admin-bg - Bulgaria
+whosonfirst-data-admin-bh - Bahrain
+whosonfirst-data-admin-bi - Burundi
+whosonfirst-data-admin-bj - Benin
+whosonfirst-data-admin-bl - Saint Barthélemy
+whosonfirst-data-admin-bm - Bermuda
+whosonfirst-data-admin-bn - Brunei
+whosonfirst-data-admin-bo - Bolivia
+whosonfirst-data-admin-bq - Bonaire
+whosonfirst-data-admin-br - Brazil
+whosonfirst-data-admin-bs - Bahamas
+whosonfirst-data-admin-bt - Bhutan
+whosonfirst-data-admin-bw - Botswana
+whosonfirst-data-admin-by - Belarus
+whosonfirst-data-admin-bz - Belize
+whosonfirst-data-admin-ca - Canada
+whosonfirst-data-admin-cc - Cocos (Keeling) Islands
+whosonfirst-data-admin-cd - Democratic Republic of the Congo
+whosonfirst-data-admin-cf - Central African Republic
+whosonfirst-data-admin-cg - Congo
+whosonfirst-data-admin-ch - Switzerland
+whosonfirst-data-admin-ci - Ivory Coast
+whosonfirst-data-admin-ck - Cook Islands
+whosonfirst-data-admin-cl - Chile
+whosonfirst-data-admin-cm - Cameroon
+whosonfirst-data-admin-cn - China
+whosonfirst-data-admin-co - Colombia
+whosonfirst-data-admin-cr - Costa Rica
+whosonfirst-data-admin-cu - Cuba
+whosonfirst-data-admin-cv - Cabo Verde
+whosonfirst-data-admin-cw - Curaçao
+whosonfirst-data-admin-cx - Christmas Island
+whosonfirst-data-admin-cy - Cyprus
+whosonfirst-data-admin-cz - Czechia
+whosonfirst-data-admin-de - Germany
+whosonfirst-data-admin-dj - Djibouti
+whosonfirst-data-admin-dk - Denmark
+whosonfirst-data-admin-dm - Dominica
+whosonfirst-data-admin-do - Dominican Republic
+whosonfirst-data-admin-dz - Algeria
+whosonfirst-data-admin-ec - Ecuador
+whosonfirst-data-admin-ee - Estonia
+whosonfirst-data-admin-eg - Egypt
+whosonfirst-data-admin-eh - Western Sahara
+whosonfirst-data-admin-er - Eritrea
+whosonfirst-data-admin-es - Spain
+whosonfirst-data-admin-et - Ethiopia
+whosonfirst-data-admin-fi - Finland
+whosonfirst-data-admin-fj - Fiji
+whosonfirst-data-admin-fk - Falkland Islands
+whosonfirst-data-admin-fm - Federated States of Micronesia
+whosonfirst-data-admin-fo - Faroe Islands
+whosonfirst-data-admin-fr - France
+whosonfirst-data-admin-ga - Gabon
+whosonfirst-data-admin-gb - United Kingdom
+whosonfirst-data-admin-gd - Grenada
+whosonfirst-data-admin-ge - Georgia
+whosonfirst-data-admin-gf - French Guiana
+whosonfirst-data-admin-gg - Guernsey
+whosonfirst-data-admin-gh - Ghana
+whosonfirst-data-admin-gi - Gibraltar
+whosonfirst-data-admin-gl - Greenland
+whosonfirst-data-admin-gm - Gambia
+whosonfirst-data-admin-gn - Guinea
+whosonfirst-data-admin-gp - Guadeloupe
+whosonfirst-data-admin-gq - Equatorial Guinea
+whosonfirst-data-admin-gr - Greece
+whosonfirst-data-admin-gs - South Georgia and the South Sandwich Islands
+whosonfirst-data-admin-gt - Guatemala
+whosonfirst-data-admin-gu - Guam
+whosonfirst-data-admin-gw - Guinea-Bissau
+whosonfirst-data-admin-gy - Guyana
+whosonfirst-data-admin-hk - Hong Kong
+whosonfirst-data-admin-hm - Heard Island and McDonald Islands
+whosonfirst-data-admin-hn - Honduras
+whosonfirst-data-admin-hr - Croatia
+whosonfirst-data-admin-ht - Haiti
+whosonfirst-data-admin-hu - Hungary
+whosonfirst-data-admin-id - Indonesia
+whosonfirst-data-admin-ie - Ireland
+whosonfirst-data-admin-il - Israel
+whosonfirst-data-admin-im - Isle of Man
+whosonfirst-data-admin-in - India
+whosonfirst-data-admin-io - British Indian Ocean Territory
+whosonfirst-data-admin-iq - Iraq
+whosonfirst-data-admin-ir - Iran
+whosonfirst-data-admin-is - Iceland
+whosonfirst-data-admin-it - Italy
+whosonfirst-data-admin-je - Jersey
+whosonfirst-data-admin-jm - Jamaica
+whosonfirst-data-admin-jo - Jordan
+whosonfirst-data-admin-jp - Japan
+whosonfirst-data-admin-ke - Kenya
+whosonfirst-data-admin-kg - Kyrgyzstan
+whosonfirst-data-admin-kh - Cambodia
+whosonfirst-data-admin-ki - Kiribati
+whosonfirst-data-admin-km - Comoros
+whosonfirst-data-admin-kn - Saint Kitts and Nevis
+whosonfirst-data-admin-kp - North Korea
+whosonfirst-data-admin-kr - South Korea
+whosonfirst-data-admin-kw - Kuwait
+whosonfirst-data-admin-ky - Cayman Islands
+whosonfirst-data-admin-kz - Kazakhstan
+whosonfirst-data-admin-la - Laos
+whosonfirst-data-admin-lb - Lebanon
+whosonfirst-data-admin-lc - Saint Lucia
+whosonfirst-data-admin-li - Liechtenstein
+whosonfirst-data-admin-lk - Sri Lanka
+whosonfirst-data-admin-lr - Liberia
+whosonfirst-data-admin-ls - Lesotho
+whosonfirst-data-admin-lt - Lithuania
+whosonfirst-data-admin-lu - Luxembourg
+whosonfirst-data-admin-lv - Latvia
+whosonfirst-data-admin-ly - Libya
+whosonfirst-data-admin-ma - Morocco
+whosonfirst-data-admin-mc - Monaco
+whosonfirst-data-admin-md - Moldova
+whosonfirst-data-admin-me - Montenegro
+whosonfirst-data-admin-mf - Saint Martin
+whosonfirst-data-admin-mg - Madagascar
+whosonfirst-data-admin-mh - Marshall Islands
+whosonfirst-data-admin-mk - North Macedonia
+whosonfirst-data-admin-ml - Mali
+whosonfirst-data-admin-mm - Myanmar
+whosonfirst-data-admin-mn - Mongolia
+whosonfirst-data-admin-mo - Macao
+whosonfirst-data-admin-mp - Northern Mariana Islands
+whosonfirst-data-admin-mq - Martinique
+whosonfirst-data-admin-mr - Mauritania
+whosonfirst-data-admin-ms - Montserrat
+whosonfirst-data-admin-mt - Malta
+whosonfirst-data-admin-mu - Mauritius
+whosonfirst-data-admin-mv - Maldives
+whosonfirst-data-admin-mw - Malawi
+whosonfirst-data-admin-mx - Mexico
+whosonfirst-data-admin-my - Malaysia
+whosonfirst-data-admin-mz - Mozambique
+whosonfirst-data-admin-na - Namibia
+whosonfirst-data-admin-nc - New Caledonia
+whosonfirst-data-admin-ne - Niger
+whosonfirst-data-admin-nf - Norfolk Island
+whosonfirst-data-admin-ng - Nigeria
+whosonfirst-data-admin-ni - Nicaragua
+whosonfirst-data-admin-nl - Netherlands
+whosonfirst-data-admin-no - Norway
+whosonfirst-data-admin-np - Nepal
+whosonfirst-data-admin-nr - Nauru
+whosonfirst-data-admin-nu - Niue
+whosonfirst-data-admin-nz - New Zealand
+whosonfirst-data-admin-om - Oman
+whosonfirst-data-admin-pa - Panama
+whosonfirst-data-admin-pe - Peru
+whosonfirst-data-admin-pf - French Polynesia
+whosonfirst-data-admin-pg - Papua New Guinea
+whosonfirst-data-admin-ph - Philippines
+whosonfirst-data-admin-pk - Pakistan
+whosonfirst-data-admin-pl - Poland
+whosonfirst-data-admin-pm - Saint Pierre and Miquelon
+whosonfirst-data-admin-pn - Pitcairn
+whosonfirst-data-admin-pr - Puerto Rico
+whosonfirst-data-admin-ps - Palestine
+whosonfirst-data-admin-pt - Portugal
+whosonfirst-data-admin-pw - Palau
+whosonfirst-data-admin-py - Paraguay
+whosonfirst-data-admin-qa - Qatar
+whosonfirst-data-admin-re - Réunion
+whosonfirst-data-admin-ro - Romania
+whosonfirst-data-admin-rs - Serbia
+whosonfirst-data-admin-ru - Russia
+whosonfirst-data-admin-rw - Rwanda
+whosonfirst-data-admin-sa - Saudi Arabia
+whosonfirst-data-admin-sb - Solomon Islands
+whosonfirst-data-admin-sc - Seychelles
+whosonfirst-data-admin-sd - Sudan
+whosonfirst-data-admin-se - Sweden
+whosonfirst-data-admin-sg - Singapore
+whosonfirst-data-admin-sh - Saint Helena
+whosonfirst-data-admin-si - Slovenia
+whosonfirst-data-admin-sj - Svalbard
+whosonfirst-data-admin-sk - Slovakia
+whosonfirst-data-admin-sl - Sierra Leone
+whosonfirst-data-admin-sm - San Marino
+whosonfirst-data-admin-sn - Senegal
+whosonfirst-data-admin-so - Somalia
+whosonfirst-data-admin-sr - Suriname
+whosonfirst-data-admin-ss - South Sudan
+whosonfirst-data-admin-st - Sao Tome and Principe
+whosonfirst-data-admin-sv - El Salvador
+whosonfirst-data-admin-sx - Sint Maarten
+whosonfirst-data-admin-sy - Syrian Arab Republic
+whosonfirst-data-admin-sz - Eswatini
+whosonfirst-data-admin-tc - Turks and Caicos Islands
+whosonfirst-data-admin-td - Chad
+whosonfirst-data-admin-tf - French Southern Territories
+whosonfirst-data-admin-tg - Togo
+whosonfirst-data-admin-th - Thailand
+whosonfirst-data-admin-tj - Tajikistan
+whosonfirst-data-admin-tk - Tokelau
+whosonfirst-data-admin-tl - Timor-Leste
+whosonfirst-data-admin-tm - Turkmenistan
+whosonfirst-data-admin-tn - Tunisia
+whosonfirst-data-admin-to - Tonga
+whosonfirst-data-admin-tr - Turkey
+whosonfirst-data-admin-tt - Trinidad and Tobago
+whosonfirst-data-admin-tv - Tuvalu
+whosonfirst-data-admin-tw - Taiwan
+whosonfirst-data-admin-tz - Tanzania
+whosonfirst-data-admin-ua - Ukraine
+whosonfirst-data-admin-ug - Uganda
+whosonfirst-data-admin-um - United States Minor Outlying Islands
+whosonfirst-data-admin-un - United Nations
+whosonfirst-data-admin-us - United States of America
+whosonfirst-data-admin-uy - Uruguay
+whosonfirst-data-admin-uz - Uzbekistan
+whosonfirst-data-admin-va - Vatican City
+whosonfirst-data-admin-vc - Saint Vincent and the Grenadines
+whosonfirst-data-admin-ve - Venezuela
+whosonfirst-data-admin-vg - Virgin Islands (British)
+whosonfirst-data-admin-vi - Virgin Islands (U.S.)
+whosonfirst-data-admin-vn - Vietnam
+whosonfirst-data-admin-vu - Vanuatu
+whosonfirst-data-admin-wf - Wallis and Futuna
+whosonfirst-data-admin-ws - Samoa
+whosonfirst-data-admin-xk - Kosovo
+whosonfirst-data-admin-xn - Null Island
+whosonfirst-data-admin-xs - Somaliland
+whosonfirst-data-admin-xx - Placeholder for "unknown"
+whosonfirst-data-admin-xy - Placeholder for "unknown"
+whosonfirst-data-admin-xz - Placeholder for "unknown"
+whosonfirst-data-admin-ye - Yemen
+whosonfirst-data-admin-yt - Mayotte
+whosonfirst-data-admin-za - South Africa
+whosonfirst-data-admin-zm - Zambia
+whosonfirst-data-admin-zw - Zimbabwe

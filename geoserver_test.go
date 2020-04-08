@@ -6,6 +6,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -60,22 +61,27 @@ func TestGetFeatureCollection(t *testing.T) {
 	}
 
 	for key, loc := range locationTestMap {
+		log.Printf("Testing: %s", key)
 		found, feature := isPointInsidePolygon(featureCollection, loc)
-		locationName := feature.Properties.MustString("NAME", feature.Properties.MustString("subunit", "UNKNOWN"))
-		if !found || locationName != key {
+		if !found || len(feature) < 1 {
+			t.Errorf("didn't find features for %s\n", key)
+		}
+		locationName := feature[0].Properties.MustString("NAME", feature[0].Properties.MustString("subunit", "UNKNOWN"))
+		if locationName != key {
 			t.Errorf("found = %t; want true -- getFeatureCollection() = '%s'; want '%s'\n", found, locationName, key)
 		}
 	}
 
 	for key, loc := range locationTestMapFalse {
+		log.Printf("False Testing: %s", key)
 		found, feature := isPointInsidePolygon(featureCollection, loc)
-		locationName := feature.Properties.MustString("NAME", feature.Properties.MustString("subunit", "UNKNOWN"))
-		if found {
-			t.Errorf("found = %t; want true -- getFeatureCollection() = '%s'; want '%s'\n", found, locationName, key)
+		if found || len(feature) > 0 {
+			t.Errorf("Found features that we shouldn't have for %s\n", key)
 		}
 	}
 }
 func TestHandlerNeg(t *testing.T) {
+	externalData = EXTGEODATA
 	loadTestData(t)
 	// Create a request to pass to our handler. We don't have any query parameters for now, so we'll
 	// pass 'nil' as the third parameter.
@@ -106,6 +112,7 @@ func TestHandlerNeg(t *testing.T) {
 	}
 }
 func TestHandlerPos(t *testing.T) {
+	externalData = EXTGEODATA
 	loadTestData(t)
 	handler := http.HandlerFunc(Handler)
 	for key, point := range locationTestMap {
