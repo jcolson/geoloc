@@ -10,7 +10,7 @@ RUN apk add --no-cache \
 # can't use this COPY, but will try to checkout the exact same revision from github, due to lfs
 COPY . /geoloc/src-orig
 
-RUN cd /geoloc/src-orig && git remote set-url origin https://github.com/jcolson/geoloc && git pull && gzip -d whosonfirst.geojson.gz
+RUN cd /geoloc/src-orig && git remote set-url origin https://github.com/jcolson/geoloc && git pull && git lfs fetch && git lfs checkout && gzip -d whosonfirst.geojson.gz
 #could re-check out the whole project if lfs isn't supported in the copy and the above git pull doesn't work
 #RUN cd /geoloc/src-orig && export REVISION=`git rev-parse HEAD` && git clone https://github.com/jcolson/geoloc /geoloc/src && cd /geoloc/src && git checkout ${REVISION}
 
