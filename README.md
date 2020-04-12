@@ -30,7 +30,7 @@
 
 # Geocode Service
 
-This service returns what location that point is in, if the geodata is aware of it.
+This service returns what location (reverse geocoding) that point is in, if the geodata is aware of it.
 
 There is bundled data in the executable, this microservice is not dependant on anything else.
 
